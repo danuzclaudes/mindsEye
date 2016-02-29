@@ -1,7 +1,19 @@
-@(message: String)
+@(user: String)
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
-
+@main("vis-graph-timeline") {
+<!-- *********************************************** -->
+<!--     Viewer for dialog, charts and time-line     -->
+<!-- *********************************************** -->
+<div><a href="/@user/visits/all">Click here to view all visiting history of patient #@user in tables</a></div>
+<div id="dialog"></div>
+<div id="graph"></div>
+<div id="interval"></div>
+<!-- Imports JavaScript files for charts, time line and utility functions -->
+<script src="@routes.Assets.versioned("javascripts/Prescriptions.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("javascripts/Visits.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("javascripts/utility/events.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("javascripts/utility/formats.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("javascripts/Graph2D.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("javascripts/Timeline.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
 }
