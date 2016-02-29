@@ -18,4 +18,5 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-play-enhancer" % "1.1.0")
 // Play Ebean support, to enable, uncomment this line, and enable in your build.sbt using
 // enablePlugins(PlayEbean). Note, uncommenting this line will automatically bring in
 // Play enhancer, regardless of whether the line above is commented out or not.
-// addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "1.0.0")
+// https://www.playframework.com/documentation/2.4.x/JavaEbean
+addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "1.0.0")

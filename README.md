@@ -1,7 +1,7 @@
 # MindsEye
 MindsEye is a research project to explore visualization and usability of Electronic Health Records (EHR) system, to help the clinicians gain overview of patients' conditions.
 
-## Install and run Play with Activator
+## Install and run Play-Activator
 + Helper Video
   - https://www.youtube.com/watch?v=bLrmnjPQsZc
 + Java JDK 1.8+
@@ -26,3 +26,31 @@ MindsEye is a research project to explore visualization and usability of Electro
   - Type `activator` command to launch the Play console
   - You can either set up configuration for Eclipse or IntelliJ for convenience
     - https://www.playframework.com/documentation/2.4.x/IDE
+
+## Configure Play-EBean Plugin and PostgreSQL connection
++ Documentation
+  - https://www.playframework.com/documentation/2.4.x/JavaDatabase#Configuring-JDBC-connection-pools
++ Assume that the PostgresSQL database has been installed and service is running
+  - `pg_ctl status/start`
++ Create new database by `createdb mindseye`
++ `build.sbt`:
+  - Enable the Play EBean plugin:
+    - `lazy val myProject = (project in file(".")).enablePlugins(PlayJava, PlayEbean)`
+  - Add dependency on postgresql library:
+    - `libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"`
+    - Library URL can be referred from http://mvnrepository.com/artifact/org.postgresql/postgresql
++ conf/application.conf:
+  - Configure the PostgreSQL settings:
+    - `db.default.driver=org.postgresql.Driver`
+    - `db.default.url="jdbc:postgresql://username:password@localhost:port/dbname"`
+    - db.default.username=username
+    - db.default.passowrd="password"
++ project/plugins.sbt:
+  - Uncomment the line:
+    - `addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "1.0.0")`
++ Run and check on `localhost:9000`
+  - Click to apply the automated SQL script
+  - As long as the service is running and database is connected, Play framework will automatically generate sql files
+    - in folder `conf/evolutions/default`
+  - Once there's any error, read carefully on the system logs, they are very helpful.
++ ORM Mapping by Ebean: http://ebean-orm.github.io/docs/mapping/

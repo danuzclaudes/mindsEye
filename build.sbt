@@ -15,3 +15,10 @@ libraryDependencies ++= Seq(
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
+
+// Modify `build.sbt` to enable the Play Ebean plugin
+// https://www.playframework.com/documentation/2.4.x/JavaEbean
+lazy val myProject = (project in file("."))
+  .enablePlugins(PlayJava, PlayEbean)
+
+libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
