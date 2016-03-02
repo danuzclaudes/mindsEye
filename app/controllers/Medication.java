@@ -40,7 +40,7 @@ public class Medication extends Controller {
             if(med.medEndDate != null) item.put("end", df.format(med.medEndDate));
             result.add(item);
         }
-        Logger.debug(result + "");
+        // Logger.debug(result + "");
 
         response().setContentType("text/javascript");
         return ok(result);

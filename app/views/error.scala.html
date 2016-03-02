@@ -1,0 +1,10 @@
+@(message: String)
+
+@main(message){
+    <a href="@routes.Application.index()">
+        <h2 style="margin-top:40px">
+            Click here to search patient records again.
+        </h2>
+    </a>
+@play20.welcome(message, style = "Java")
+}

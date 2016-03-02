@@ -18,7 +18,8 @@ console.log("Retrieving all data...");
 $.ajax({
     type: 'GET',
     // @Todo: how to generalize to parametrized visit?
-    url: "/visit/84f22a76e57ab37dde3af8ec5e21f670/medications/all",
+    dataType: 'json',
+    url: '/visit/84f22a76e57ab37dde3af8ec5e21f670/medications',
     success: function(return_obj, status, jqXHR) {
         // BZ: must deserialize from string to JSON objects
         // prescriptions = jQuery.parseJSON(return_obj);
@@ -47,8 +48,8 @@ $.ajax({
             end: graph_end_format(timeRange.max),
             // set granularity of x-axis
             timeAxis: {
-                scale: 'day', // be cautious to set 'day'
-                step: 5,
+                scale: 'month', // be cautious to set 'day'
+                step: 1,
             },
         });
 
@@ -57,7 +58,6 @@ $.ajax({
     },
     error: function(response, status, errorThrown) {},
 });
-
 
 /**
  * Set up 2D Graph data and options by visiting data of a user.
@@ -69,7 +69,8 @@ $.ajax({
  */
 $.ajax({
     type: 'GET',
-    url: "/15/visits/all", // @Todo: how to generalize to given user?
+    dataType: 'json',
+    url: '/patient/15/visits', // @Todo: how to generalize to given user?
     success: function(return_obj, status, jqXHR) {
         // BZ: must deserialize from string to JSON objects
         // visits = jQuery.parseJSON(return_obj);
@@ -127,15 +128,18 @@ $.ajax({
 
 
 $('document').ready(function() {
-    //////////////////////////////////////////////////////////
-    // Apply singleton pattern to register graph and time-line
-    // to each other with dragging event.
-    //////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    // Apply singleton pattern to register graph and timeline
+    // on dragging events to each other.
+    ////////////////////////////////////////////////////////
     Timeline.getInstance().on('rangechange', onDragTimeLine);
     Graph2d.getInstance().on('rangechange', onDragGraph);
     Graph2d.getInstance().on('rangechange', onDragGraph);
 
-    // http://codepen.io/agrimsrud/pen/EmCoa
+    ////////////////////////////////////////////////////////
+    // Display loading effect while reading from database.
+    // Thanks to: http://codepen.io/agrimsrud/pen/EmCoa
+    ////////////////////////////////////////////////////////
     var loader = document.getElementById('loader'),
         border = document.getElementById('border'),
         α = 0,
@@ -157,7 +161,7 @@ $('document').ready(function() {
 
     setTimeout(function() {
         ////////////////////////////////////////////////////////
-        // access all cycles/points on graph and register listeners
+        // Access all cycles/points on graph and register listeners
         ////////////////////////////////////////////////////////
         // http://stackoverflow.com/questions/30211605
         var arr = Array.prototype.slice.call($('svg')[1].children);
