@@ -1,7 +1,8 @@
+@**************************************
+* View for tabular visit data,        *
+* including date, cgi score and notes *
+**************************************@
 @(visit: models.Visit)
-<!-- ******************************************************************* -->
-<!-- View for each visit data point, including date, cgi score and notes -->
-<!-- ******************************************************************* -->
 <tr>
     <td class="date" width="20%">
         <a href="/visit/@visit.visitId/medications">@visit.visitDate.format("yyyy-MM-dd")</a>

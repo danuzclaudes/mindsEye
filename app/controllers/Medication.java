@@ -12,37 +12,68 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import views.html.error;
+import views.html.medicines.medlist;
+
+
 public class Medication extends Controller {
 
-    public Result getAll(String visit){
+    /**
+     * Returns all medications data on a visit.
+     * The response of this `GET` request will be either HTML tables
+     * through the Viewer `medlist.scala.html` by default,
+     * or JSON type as response of AJAX calls
+     * @param   visit   MD5 hashed visit id
+     * @return  visit's medicines data according to content-type
+     */
+    public Result getAll(String visit) {
+        Logger.debug("Get all medicines...");
         List<models.Medication> allMeds =
                 models.Medication.findMedsByVisit(visit);
-        Logger.debug(allMeds.get(0).medStartDate + "");
-        return ok("found all meds");
+        String acceptedTypes = request().acceptedTypes().get(0).toString();
+
+        // get previous url that directing to medicine-list page
+        // https://stackoverflow.com/a/23816747
+        String refererUrl = request().getHeader("referer");
+        Logger.debug("Previous URL: " + refererUrl);
+
+        if (acceptedTypes.equals("text/html")) {
+            return ok(medlist.render(visit, "Medicine Records", allMeds, refererUrl));
+        } else if (acceptedTypes.equals("application/json")) {
+            return getAllInJSON(allMeds);
+        } else {
+            return badRequest(error.render(
+                    "Bad Request for Medications"));
+        }
     }
 
     private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public Result getAllInJSON(String id) {
-        Logger.debug("Get all medicines in JSON format");
+    /**
+     * Returns all medications data of prescribed on one visit `visit`.
+     * The medictions data will be returned as input data for TimeLine
+     * through AJAX calls.
+     * @param   allMeds  list of all selected and sorted medicines
+     * @return  a JSON object as dataset of TimeLine
+     *
+     * Example:
+     * [{id:8, content:'...', start:'...', end:'...', group:'TCA'},...]
+     */
+    public Result getAllInJSON(List<models.Medication> allMeds) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode result = Json.newArray();
 
-        // @TODO
-        // restore json format as of visits.js
-        // {id: 8, content: 'item 5', start: '2015-10-28', end: '2015-11-12', group: 'TCA'},
-        for(models.Medication med : models.Medication.findMedsByVisit(id)){
+        for (models.Medication med : allMeds) {
             ObjectNode item = mapper.createObjectNode();
             item.put("id", med.medId);
             item.put("content", med.medName);
             item.put("start", df.format(med.medStartDate));
             item.put("group", med.medGroup);
-            if(med.medEndDate != null) item.put("end", df.format(med.medEndDate));
+            if (med.medEndDate != null)
+                item.put("end", df.format(med.medEndDate));
             result.add(item);
         }
-        // Logger.debug(result + "");
-
-        response().setContentType("text/javascript");
+        response().setContentType("application/json");
         return ok(result);
     }
 }

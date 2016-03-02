@@ -2,14 +2,14 @@ package controllers;
 
 import play.Routes;
 import play.mvc.*;
-import views.html.badrequest;
+import views.html.error;
 import views.html.index;
 
 public class Application extends Controller {
 
     public Result index() {
-        return ok(index.render("15"));
-    }  // @ToDo: userID
+        return ok(index.render("Welcome to MindsEye"));
+    }
 
     /**
      * May find helpful here:
@@ -30,10 +30,10 @@ public class Application extends Controller {
         Result res = null;
         switch(id){
             case 400:
-                res = badRequest(badrequest.render(id + " Bad Request"));
+                res = badRequest(error.render(id + " Bad Request"));
                 break;
             case 500:
-                res = badRequest(badrequest.render(id + " Internal Error"));
+                res = badRequest(error.render(id + " Internal Error"));
                 break;
         }
         return res;

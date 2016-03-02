@@ -1,0 +1,36 @@
+@**************************************
+* View for tabular medicine data,     *
+* including med name, prescription    *
+* dates and med group                 *
+**************************************@
+@(medicine: models.Medication)
+
+@currentTime = @{
+    import java.util.Calendar
+    import java.text.SimpleDateFormat
+
+    val today = Calendar.getInstance.getTime
+    val curTimeFormat = new SimpleDateFormat("yyyy-MM-dd")
+
+    curTimeFormat.format(today)
+}
+
+<tr>
+    <td class="name" width="20%">
+        @medicine.medName
+    </td>
+    <td class="group" width="20%">
+        @medicine.medGroup
+    </td>
+    <td class="startdate" width="20%">
+        @medicine.medStartDate.format("yyyy-MM-dd")
+    </td>
+    <td class="enddate" width="20%">
+        @if(medicine.medEndDate == null) {
+            @currentTime
+        } else {
+            @medicine.medEndDate.format("yyyy-MM-dd")
+        }
+    </td>
+</tr>
+<tr><td>&nbsp</td></tr>

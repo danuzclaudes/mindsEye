@@ -1,0 +1,36 @@
+@**************************************
+* View for list of medications/durgs. *
+* @id:      id of visit               *
+* @group:   tag for page              *
+* @medicines    a list of medicines   *
+* @prevPage     previous page url     *
+**************************************@
+@(id: String, group: String, medicines: List[models.Medication], prevPage: String)
+
+@main("list-medicines"){
+<table data-group="@group" border="1" width="80%" style="margin-left:50px; margin-bottom:30px">
+    <tr>
+        <h3 class="groupname" style="margin-left:50px">
+            @group for visit # @id
+        </h3>
+    </tr>
+    <tr>
+        <a href="@prevPage" style="margin-left:50px">
+            Click here to return to previous visits page
+        </a>
+    </tr>
+    @if(medicines.isEmpty){
+        <h3 style="margin-left:50px">No medicine records available</h3>
+    } else {
+        <tr>
+            <td><b>Drug Name: </b></td>
+            <td><b>Group: </b></td>
+            <td><b>Start Date: </b></td>
+            <td><b>End Date: </b></td>
+        </tr>
+        @medicines.map { med =>
+            <tr class="med.medName">@views.html.medicines.medicine(med)</tr>
+        }
+    }
+</table>
+}
