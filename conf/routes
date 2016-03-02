@@ -5,5 +5,20 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+# AJAX calls; must be placed prior to static resources
+# See stackoverflow.com/a/20446657
+GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+# Get all visiting data of a patient <id>
+GET     /:id/visits                 controllers.Visit.getAll(id: Integer)
+
+# Get all visiting data of a patient <id> in JSON format
+GET     /:id/visits/all             controllers.Visit.getAllInJSON(id: Integer)
+
+# Get all medications/drugs prescribed by a given visit <id>
+GET     /visit/:id/medications      controllers.Medication.getAll(id: String)
+
+GET     /visit/:id/medications/all  controllers.Medication.getAllInJSON(id: String)

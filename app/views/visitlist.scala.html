@@ -1,0 +1,14 @@
+@(id: Integer, group: String, visits: List[models.Visit])
+
+@main("list-visits"){
+<!-- ********************************************************** -->
+<!-- View for table of all visiting data related with user <id> -->
+<!-- ********************************************************** -->
+<table data-group="@group" border="1" width="50%" style="margin-left:50px">
+    <tr><h3 class="groupname" style="margin-left:50px">@group for patient # @id</h3></tr>
+    <tr><h4 style="margin-left:50px">Click on the date to see all drugs prescribed on that visit</h4></tr>
+    @for(v <- visits) {
+        <tr class="v.visitId">@views.html.visit(v)</tr>
+    }
+</table>
+}

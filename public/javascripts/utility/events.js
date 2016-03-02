@@ -1,46 +1,49 @@
-function onDragGraph(range){
+function onDragGraph(range) {
     // utility function of reaction to drag/zoom-in/out 2d-graph
     // console.log('rangechange', range);
-    // timeline.setWindow({
-    timeline.setOptions({
+    Timeline.getInstance().setOptions({
         start: range.start,
         end: range.end,
     });
 }
 
-function onDragTimeLine(range){
+function onDragTimeLine(range, graph2d) {
     // utility function of reaction to drag/zoon-in/out timeline
-    graph2d.setOptions({
+    Graph2d.getInstance().setOptions({
         start: range.start,
         end: range.end,
     });
 }
 
-function registerMouseOverPoints(circles){
+function registerMouseOverPoints(circles) {
     // register each point on 2d graph with mouse-over event
     // function scope:
     // http://stackoverflow.com/questions/6077357
-    $.each(circles, function(index, value){
-        $(value).mouseover(function () {
+    $.each(circles, function(index, value) {
+        $(value).mouseover(function() {
             showModal(value, index);
         });
     });
 }
 
-function showModal(circle, index){
+function showModal(circle, index) {
     // display patient notes when mouse is over point on 2d graph
     // http://stackoverflow.com/questions/18690355
-    $(document).ready(function(){
+    $(document).ready(function() {
         var eid = $('#dialog');
         var blurb = visits[index].notes;
 
-        console.log("mouse hovin "+ index);
-        eid.css({"height":"100px", "background-color":"wheat", "padding":"10px",});
+        console.log("mouse hovin " + index);
+        eid.css({
+            "height": "100px",
+            "background-color": "wheat",
+            "padding": "10px",
+        });
         eid.html(blurb);
 
         eid.dialog({
-            autoOpen:false,
-            title:"Visit Note on " + visits[index].x,
+            autoOpen: false,
+            title: "Visit Note on " + visits[index].x,
             show: "fade",
             hide: "fade",
             width: 500, //orig defaults: width: 300, height: auto
@@ -51,5 +54,5 @@ function showModal(circle, index){
             }
         }); // END eid.dialog
         eid.dialog('open');
-    });  // END $(document).ready
+    }); // END $(document).ready
 }
