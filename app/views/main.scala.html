@@ -44,9 +44,11 @@
         <!-- Sidebar Menu Items -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
+                @if(session.get("patient") != null){
                 <li>
-                    <a href="/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    <a href="/patient/@session.get("patient")"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                 </li>
+                }
             </ul>
         </div>
         <!-- /.navbar-collapse -->

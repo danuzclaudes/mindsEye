@@ -38,7 +38,7 @@ public class ModelsTest extends WithApplication{
         md.update(new Date().toString().getBytes());
         // logger.debug("md5 id is" + md.digest());
         // logger.debug("parse date object: " + df.parse("1/12/2011").toString());
-        new Visit(md.digest().toString(), df.parse("1/12/2011"), 7, "This is visit 1").save();
+        new Visit(md.digest().toString(), df.parse("1/12/2011"), 7, "This is visit 1", 15).save();
         Visit v = Visit.find.where().eq("visitDate", new Date("1/12/2011")).findUnique();
         assertNotNull("Test if the visit record can be found:", v);
         assertEquals(7, v.cgiScore);
@@ -51,8 +51,8 @@ public class ModelsTest extends WithApplication{
 
         md.update(d1.toString().getBytes()); String id1 = md.digest().toString();
         md.update(d2.toString().getBytes()); String id2 = md.digest().toString();
-        Visit v1 = new Visit(id1, d1, 7, "This is visit 1");
-        Visit v2 = new Visit(id2, d2, 7, "This is visit 2");
+        Visit v1 = new Visit(id1, d1, 7, "This is visit 1", 15);
+        Visit v2 = new Visit(id2, d2, 7, "This is visit 2", 15);
         // BZ: must explicitly save by initiated objects or by constructor new (...).save()
         v1.save(); v2.save();
 

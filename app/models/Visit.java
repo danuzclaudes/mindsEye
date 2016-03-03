@@ -27,21 +27,24 @@ public class Visit extends Model {
      * @param date
      * @param cgi
      * @param notes
+     * @param patient
      */
-    public Visit(String id, Date date, int cgi, String notes){
+    public Visit(String id, Date date, int cgi, String notes, int patient){
         this.visitId = id;
         this.visitDate = date;
         this.cgiScore = cgi;
         this.visitGroup = 0;
         this.visitNotes = notes;
+        this.patient = Patient.find.byId(patient);
     }
 
     /**
      * The `userId` field is the foreign key to Table `User`:
      * "A VISIT CAN BELONG TO ONE PATIENT"
      */
-    @Column(name="patient_id", columnDefinition = "integer not null")
-    public int userId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "patient_id", referencedColumnName = "patient_id")
+    public Patient patient;
 
     // "A VISIT CAN HAVE MANY MEDICATIONS/DRUGS"
     // can remove the OneToMany side without any major issues
@@ -63,10 +66,12 @@ public class Visit extends Model {
      * @param date
      * @param cgi
      * @param notes
+     * @param patient
      * @return
      */
-    public static Visit create(String id, Date date, int cgi, String notes){
-        Visit visit = new Visit(id, date, cgi, notes);
+    public static Visit create(String id, Date date,
+                               int cgi, String notes, int patient){
+        Visit visit = new Visit(id, date, cgi, notes, patient);
         visit.save();
         return visit;
     }

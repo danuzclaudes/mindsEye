@@ -4,11 +4,14 @@
 
 # Pages
 GET     /                           controllers.Application.index()
+POST    /patient                    controllers.Patient.post()
+GET     /patient/:id                controllers.Patient.dashboard(id: Integer)
 GET     /patient/:id/visits         controllers.Visit.getAll(id: Integer)
-GET     /visit/:id/medications      controllers.Medication.getAll(id: String)
+GET     /patient/:id/medications    controllers.Medication.getByPatient(id: Integer)
+GET     /visit/:id/medications      controllers.Medication.getByVisit(id: String)
 GET     /error/:id                  controllers.Application.handleError(id: Integer)
 
-# JS ROUTES;
+# JS ROUTES
 GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes()
 
 # Map static resources from the /public folder to the /assets URL path

@@ -1,8 +1,7 @@
 package models;
 
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Model;
+import com.avaje.ebean.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -82,5 +81,33 @@ public class Medication extends Model{
      */
     public static List<Medication> findMedsByVisit(String visit){
         return find.where().eq("prescribed_on_visit", Visit.find.ref(visit)).findList();
+    }
+
+    /**
+     * Retrieve all drugs/medications prescribed for a patient.
+     * Documentation:
+     * https://ebean-orm.github.io/apidocs/com/avaje/ebean/RawSql.html
+     * @param   patient     integer value of patient id
+     * @return  List<Medication>    a list of all medicines related for this patient
+     */
+    public static List<Medication> findMedsByPatient(int patient){
+        String sql = "select m.med_id, m.med_name, m.med_start_date,"
+            + " m.med_end_date, m.med_group"
+            + " from patient p, visit v, medication m"
+            + " where p.patient_id = v.patient_id and"
+            + " v.visit_id = m.prescribed_on_visit and"
+            + " p.patient_id = " + patient + ";";
+        System.out.println(sql);
+        RawSql rawSql = RawSqlBuilder.parse(sql)
+                .tableAliasMapping("m", "medication")
+                .tableAliasMapping("p", "patient")
+                .tableAliasMapping("v", "visit")
+                .columnMapping("m.med_id", "medId")
+                .columnMapping("m.med_name", "medName")
+                .columnMapping("m.med_start_date", "medStartDate")
+                .columnMapping("m.med_end_date", "medEndDate")
+                .columnMapping("m.med_group", "medGroup")
+                .create();
+        return Medication.find.setRawSql(rawSql).findList();
     }
 }

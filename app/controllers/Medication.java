@@ -19,6 +19,23 @@ import views.html.medicines.medlist;
 public class Medication extends Controller {
 
     /**
+     * Get accepted file type of this HTTP request
+     */
+    private String acceptedTypes;
+    /**
+     * Get previous url that directing to medicine-list page
+     * https://stackoverflow.com/a/23816747
+     */
+    private String refererUrl;
+
+    public Result getByPatient(int patient) {
+        Logger.debug("Get all medicines of patient " + patient);
+        List<models.Medication> allMeds = models.Medication.findMedsByPatient(patient);
+
+        return decideContentType(allMeds, patient + "", true);
+    }
+
+    /**
      * Returns all medications data on a visit.
      * The response of this `GET` request will be either HTML tables
      * through the Viewer `medlist.scala.html` by default,
@@ -26,19 +43,24 @@ public class Medication extends Controller {
      * @param   visit   MD5 hashed visit id
      * @return  visit's medicines data according to content-type
      */
-    public Result getAll(String visit) {
+    public Result getByVisit(String visit) {
         Logger.debug("Get all medicines...");
-        List<models.Medication> allMeds =
-                models.Medication.findMedsByVisit(visit);
-        String acceptedTypes = request().acceptedTypes().get(0).toString();
+        List<models.Medication> allMeds = models.Medication.findMedsByVisit(visit);
 
-        // get previous url that directing to medicine-list page
-        // https://stackoverflow.com/a/23816747
-        String refererUrl = request().getHeader("referer");
+        acceptedTypes = request().acceptedTypes().get(0).toString();
+        refererUrl = request().getHeader("referer");
         Logger.debug("Previous URL: " + refererUrl);
 
+        return decideContentType(allMeds, visit, false);
+    }
+
+    private Result decideContentType(List<models.Medication> allMeds, String id, boolean flag){
+        acceptedTypes = request().acceptedTypes().get(0).toString();
+        refererUrl = request().getHeader("referer");
+
         if (acceptedTypes.equals("text/html")) {
-            return ok(medlist.render(visit, "Medicine Records", allMeds, refererUrl));
+            String title = "Medicine Records for " + (flag ? "patient" : "visit");
+            return ok(medlist.render(id, title, allMeds, refererUrl));
         } else if (acceptedTypes.equals("application/json")) {
             return getAllInJSON(allMeds);
         } else {

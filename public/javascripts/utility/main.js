@@ -9,6 +9,8 @@ console.log("Retrieving all data...");
 
 /**
  * Set up Time-line data and options by medications from a visit.
+ * The AJAX call should retrieve all medications records related to
+ * the patient, instead of only one visit
  * Documentation: http://visjs.org/docs/timeline/
  * @id      id of drug          required
  * @content name of medicine    required
@@ -17,9 +19,9 @@ console.log("Retrieving all data...");
  */
 $.ajax({
     type: 'GET',
-    // @Todo: how to generalize to parametrized visit?
     dataType: 'json',
-    url: '/visit/84f22a76e57ab37dde3af8ec5e21f670/medications',
+    // url: '/visit/84f22a76e57ab37dde3af8ec5e21f670/medications',
+    url: '/patient/'+ $('#user-id').attr("class") +'/medications',
     success: function(return_obj, status, jqXHR) {
         // BZ: must deserialize from string to JSON objects
         // prescriptions = jQuery.parseJSON(return_obj);
@@ -70,7 +72,7 @@ $.ajax({
 $.ajax({
     type: 'GET',
     dataType: 'json',
-    url: '/patient/15/visits', // @Todo: how to generalize to given user?
+    url: '/patient/'+ $('#user-id').attr("class") +'/visits',
     success: function(return_obj, status, jqXHR) {
         // BZ: must deserialize from string to JSON objects
         // visits = jQuery.parseJSON(return_obj);

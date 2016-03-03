@@ -1,25 +1,17 @@
-@(user: String)
+@***********************************
+* Viewer for submitting patient id *
+***********************************@
+@(message: String)
 
-@main("vis-graph-timeline") {
-<!-- *********************************************** -->
-<!--     Viewer for dialog, charts and time-line     -->
-<!-- *********************************************** -->
-<div><a href="/@user/visits">Click here to view all visiting history of patient #@user in tables</a></div>
+@main("patient-query") {
+    <h1>Welcome to MindsEye</h1>
+    <h4>Please input the patient's ID that you want to query:</h4>
 
-<svg id="loading" width="250" viewbox="0 0 250 250">
-    <path id="border" transform="translate(125, 125)"/>
-    <path id="loader" transform="translate(125, 125) scale(.84)"/>
-</svg>
-
-<div id="dialog"></div>
-<div id="graph"></div>
-<div id="interval"></div>
-
-<script src="@routes.Application.javascriptRoutes()" type="text/javascript"></script>
-<!-- Imports JavaScript files for charts, time line and utility functions -->
-<script src="@routes.Assets.versioned("javascripts/utility/events.js")" type="text/javascript"></script>
-<script src="@routes.Assets.versioned("javascripts/utility/formats.js")" type="text/javascript"></script>
-<script src="@routes.Assets.versioned("javascripts/Graph2D.js")" type="text/javascript"></script>
-<script src="@routes.Assets.versioned("javascripts/Timeline.js")" type="text/javascript"></script>
-<script src="@routes.Assets.versioned("javascripts/utility/main.js")" type="text/javascript"></script>
+    @*************************************************
+    * specify where this form should be submitted to *
+    *************************************************@
+    @helper.form(routes.Patient.post) {
+        <p><input type="text" name="patient" value=""></p>
+        <p><button type="submit">Submit</button></p>
+    }
 }

@@ -1,18 +1,19 @@
-@**************************************
-* View for list of medications/durgs. *
-* @id:      id of visit               *
-* @group:   tag for page              *
-* @medicines    a list of medicines   *
-* @prevPage     previous page url     *
-**************************************@
-@(id: String, group: String, medicines: List[models.Medication], prevPage: String)
+@******************************************************
+* View for list of medications/drugs.                 *
+* This view can be applied to list all drugs either   *
+* prescribed by one visit, or all records found with  *
+* a particular patient.                               *
+* @id:      id of a visit or patient                  *
+* @title:   title for the page                        *
+* @medicines    a list of medicines                   *
+* @prevPage     previous page url                     *
+******************************************************@
+@(id: String, title: String, medicines: List[models.Medication], prevPage: String)
 
 @main("list-medicines"){
-<table data-group="@group" border="1" width="80%" style="margin-left:50px; margin-bottom:30px">
+<table data-group="@id" border="1" width="80%" style="margin-left:50px; margin-bottom:30px">
     <tr>
-        <h3 class="groupname" style="margin-left:50px">
-            @group for visit # @id
-        </h3>
+        <h3 class="groupname" style="margin-left:50px">@title # @id</h3>
     </tr>
     <tr>
         <a href="@prevPage" style="margin-left:50px">

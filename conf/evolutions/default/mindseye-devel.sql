@@ -41,43 +41,59 @@ create table IF NOT EXISTS medication (
 );
 \d medication
 
+create table IF NOT EXISTS patient (
+  patient_id                serial not null,
+  patient_age               integer,
+  patient_sex               char(1),
+  patient_race              char(1),
+  days_since_last_visit     integer default 0,
+  constraint pk_patient primary key (patient_id));
+\d patient
+
+insert into patient (patient_id, patient_age, patient_sex, patient_race)
+values (15, 40, 'F', 'U');
+
+insert into patient (patient_id, patient_age, patient_sex, patient_race)
+values (171, 19, 'M', 'W');
+
 insert into visit (visit_id, patient_id, visit_date, cgi_score, visit_notes) values
 ('84f22a76e57ab37dde3af8ec5e21f670', 15, TO_DATE('1/10/2011', 'MM/DD/YYYY'), 7,
-'<b>SILS</b> educates innovative and responsible thinkers who will lead the \\n
- information professions; discovers principles and impacts of information; \\n
- creates systems, techniques, and policies to advance information processes \\n
- and services; and advances information creation, access, use, management, \\n
+'<b>SILS</b> educates innovative and responsible thinkers who will lead the
+ information professions; discovers principles and impacts of information;
+ creates systems, techniques, and policies to advance information processes
+ and services; and advances information creation, access, use, management,
  and stewardship to improve the quality of life for diverse local, national, and global communities.'
 );
+
 insert into medication (med_id, med_name, med_start_date, med_end_date, med_group, prescribed_on_visit) values
 (1, 'BUPR', TO_DATE('1/12/2011', 'MM/DD/YYYY'), NULL, 'BUP', '84f22a76e57ab37dde3af8ec5e21f670');
 
 insert into visit (visit_id, patient_id, visit_date, cgi_score, visit_notes) values
 (md5(CURRENT_TIMESTAMP :: TEXT), 15, TO_DATE('1/12/2011', 'MM/DD/YYYY'), 7,
-'Ms. Bingham is a 24 year old woman who complains of worsening sore throat \\n
-since yesterday morning. She has never had a similar problem in the past. \\n
-She has no difficulty swallowing, but notes that swallowing makes the pain worse. \\n
-Nothing makes it better. There is no SOB or sensation of choking or dysphagia. \\n
+'Ms. Bingham is a 24 year old woman who complains of worsening sore throat
+since yesterday morning. She has never had a similar problem in the past.
+She has no difficulty swallowing, but notes that swallowing makes the pain worse.
+Nothing makes it better. There is no SOB or sensation of choking or dysphagia.
 \n\nFHx: father with HTN<br>FHx: married with 2 children, No ETOH or drugs, monogamous with husband'
 );
 
 insert into visit (visit_id, patient_id, visit_date, cgi_score, visit_notes) values
 (md5(CURRENT_TIMESTAMP :: TEXT), 15, TO_DATE('3/9/2011', 'MM/DD/YYYY'), 7,
-'Ms. Bingham is a 24 year old woman who complains of worsening sore throat \\n
-since yesterday morning. She has never had a similar problem in the past. \\n
-She has no difficulty swallowing, but notes that swallowing makes the pain worse. \\n
+'Ms. Bingham is a 24 year old woman who complains of worsening sore throat
+since yesterday morning. She has never had a similar problem in the past.
+She has no difficulty swallowing, but notes that swallowing makes the pain worse.
 Nothing makes it better. There is no SOB or sensation of choking or dysphagia.'
 );
 
 insert into visit (visit_id, patient_id, visit_date, cgi_score, visit_notes) values
 (md5(CURRENT_TIMESTAMP :: TEXT), 15, TO_DATE('1/5/2011', 'MM/DD/YYYY'), 2,
-'Ms. Bingham is a 24 year old woman who complains of worsening sore throat \\n
+'Ms. Bingham is a 24 year old woman who complains of worsening sore throat
 \n\nFHx: father with HTN<br>FHx: married with 2 children, No ETOH or drugs, monogamous with husband');
 
 insert into visit (visit_id, patient_id, visit_date, cgi_score, visit_notes) values
 (md5(CURRENT_TIMESTAMP :: TEXT), 15, TO_DATE('5/11/2011', 'MM/DD/YYYY'), 7,
-'She has no difficulty swallowing, but notes that swallowing makes the pain worse. \\n
-Nothing makes it better. There is no SOB or sensation of choking or dysphagia. \\n
+'She has no difficulty swallowing, but notes that swallowing makes the pain worse.
+Nothing makes it better. There is no SOB or sensation of choking or dysphagia.
 \n\nFHx: father with HTN<br>FHx: married with 2 children, No ETOH or drugs, monogamous with husband');
 
 insert into visit (visit_id, patient_id, visit_date, cgi_score, visit_notes) values

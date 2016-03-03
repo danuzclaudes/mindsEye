@@ -5,7 +5,7 @@
 @(visit: models.Visit)
 <tr>
     <td class="date" width="20%">
-        <a href="/visit/@visit.visitId/medications">@visit.visitDate.format("yyyy-MM-dd")</a>
+        <a href="@routes.Medication.getByVisit(visit.visitId)">@visit.visitDate.format("yyyy-MM-dd")</a>
     </td>
     <td class="cgi" width="50%"><b>CGI Score:</b> @visit.cgiScore</td>
 </tr>
