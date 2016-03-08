@@ -1,6 +1,10 @@
 # MindsEye
 MindsEye is a research project to explore visualization and usability of Electronic Health Records (EHR) system, to help the clinicians gain overview of patients' conditions.
 
++ Model: PostgreSQL; Java for Object-relational mapping (ORM) design pattern
++ View: Scala template; jQuery, AJAX; Vis library
++ Controller: Java
+
 ## Install and run Play-Activator
 + Helper Video
   - https://www.youtube.com/watch?v=bLrmnjPQsZc
@@ -54,3 +58,23 @@ MindsEye is a research project to explore visualization and usability of Electro
     - in folder `conf/evolutions/default`
   - Once there's any error, read carefully on the system logs, they are very helpful.
 + ORM Mapping by Ebean: http://ebean-orm.github.io/docs/mapping/
+
+## HTTP router: `conf/routes`
++ Documentation: https://www.playframework.com/documentation/2.4.x/JavaRouting
++ The router is the component that translates each incoming HTTP request to a public method in a controller class
+  - HTTP method: `GET/POST/PUT/DELETE`
+  - request path, or self-defined RESTful API: `/patient/:id`, `/visit/:id/medications`, etc
+  - call definition: `controllers.YourClass.method(para: Type)`
++ Design your own request path and related call def first to expand new APIs.
++ APIs
+  - GET     /                           controllers.Application.index()
+  - POST    /patient                    controllers.Patient.post()
+  - GET     /patient/:id                controllers.Patient.dashboard(id: Integer)
+  - GET     /patient/:id/visits         controllers.Visit.getAll(id: Integer)
+  - GET     /patient/:id/medications    controllers.Medication.getByPatient(id: Integer)
+  - GET     /visit/:id/medications      controllers.Medication.getByVisit(id: String)
+  - GET     /error/:id                  controllers.Application.handleError(id: Integer)
+
+
+## Models and ORM layer
+
