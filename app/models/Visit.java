@@ -20,6 +20,8 @@ public class Visit extends Model {
     public int visitGroup;  // group for 2d-graph; default 0;
     @Column(name="visit_notes", columnDefinition = "text")
     public String visitNotes;
+    @Column(name="visit_type", columnDefinition = "char(1)")
+    public char visitType;  // 'T' denotes by telephone; 'I' denotes by in-person;
 
     /**
      * Constructor for Visit
@@ -29,12 +31,13 @@ public class Visit extends Model {
      * @param notes
      * @param patient
      */
-    public Visit(String id, Date date, int cgi, String notes, int patient){
+    public Visit(String id, Date date, int cgi, String notes, char type, int patient){
         this.visitId = id;
         this.visitDate = date;
         this.cgiScore = cgi;
         this.visitGroup = 0;
         this.visitNotes = notes;
+        this.visitType = type;
         this.patient = Patient.find.byId(patient);
     }
 
@@ -69,9 +72,9 @@ public class Visit extends Model {
      * @param patient
      * @return
      */
-    public static Visit create(String id, Date date,
-                               int cgi, String notes, int patient){
-        Visit visit = new Visit(id, date, cgi, notes, patient);
+    public static Visit create(String id, Date date, int cgi,
+                               String notes, char type, int patient){
+        Visit visit = new Visit(id, date, cgi, notes, type, patient);
         visit.save();
         return visit;
     }

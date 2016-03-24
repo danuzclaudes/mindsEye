@@ -28,6 +28,7 @@ create table visit (
   cgi_score                 integer not null,
   visit_group               integer default 0,
   visit_notes               text,
+  visit_type                char(1),
   patient_id                integer,
   constraint pk_visit primary key (visit_id))
 ;
