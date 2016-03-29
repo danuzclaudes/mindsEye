@@ -47,8 +47,8 @@ MindsEye is a research project to explore visualization and usability of Electro
   - Configure the PostgreSQL settings:
     - `db.default.driver=org.postgresql.Driver`
     - `db.default.url="jdbc:postgresql://username:password@localhost:port/dbname"`
-    - db.default.username=username
-    - db.default.passowrd="password"
+    - `db.default.username=username`
+    - `db.default.passowrd="password"`
 + project/plugins.sbt:
   - Uncomment the line:
     - `addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "1.0.0")`
@@ -75,6 +75,38 @@ MindsEye is a research project to explore visualization and usability of Electro
   - GET     /visit/:id/medications      controllers.Medication.getByVisit(id: String)
   - GET     /error/:id                  controllers.Application.handleError(id: Integer)
 
+## Deployment - Ruby server & OpenShift
++ Reference here: https://www.playframework.com/documentation/latest/Deploying
++ Configure the application secret
++ Run `activator`, and in the play console, run `dist` to generate a ZIP file containing all JAR files needed to run your application in the `target/universal` folder
++ Run script `./$PRODUCTION_HOME/bin/<project-name> &`
++ BZ: How to solve the problem that server does not have Java 8?
+  - Download jdk8 from Oracle and move it to your own java home
+  - Unzip the file and add the following at the beginning of `$PRODUCTION_HOME/bin/<project-name>` file
+    ```shell
+    export JAVA_HOME=/path/to/jdk1.8.0_xx
+    export PATH=$JAVA_HOME:$PATH
+    echo $PATH
+    ```
 
-## Models and ORM layer
+  - This script will automatically be applied when play production is running
++ BZ: For errors of "This application is already running"
+  - Delete `/$PROJECT_HOME/RUNNING_PID` file.
+  - Check environment: `ps afx | grep mindseye` to check if the script is running at backend; kill it if necessary
+  - You may also apply the following to `bin/<project-name>` script if you install PostgreSQL through my [script](./conf/evolutions/default/Postgres-Setup.sh)
 
+    ```shell
+    # Set up PostgreSQL
+    export PG_HOME=/export/home/c/chongrui/postgres
+    PATH=$PG_HOME/bin:$PATH
+    export PATH
+    export PGDATA=$PG_HOME/data
+    pg_ctl status
+    ```
+
++ After running the `$PRODUCTION_HOME/bin/<project-name>` script, the play framework will be running at background using port 9000 on the server.
+  - Then you can access it throught the server's hostname or IP address since it is listening to all IP addresses by `0.0.0.0`.
+  - However, you might need to ask sys admin to open the port 9000 on the server;
+    - check with `nmap <hostname>`
++ BZ: How to deploy on OpenShift?
+  - DO PLEASE send me a new issue if you have successfully deployed it, especially the shitty db connection...

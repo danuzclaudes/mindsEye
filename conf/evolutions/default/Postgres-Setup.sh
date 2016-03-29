@@ -5,6 +5,9 @@ cd postgres
 wget http://ftp.postgresql.org/pub/source/v9.5.0/postgresql-9.5.0.tar.gz
 md5sum postgresql-9.5.0.tar.gz
 
+# Ensure that the path to postgres is correctly set
+export PG_HOME=/var/lib/openshift/<uuid-for-openshift>/postgres
+
 # start making the Postgres system
 # gunzip postgresql-9.5.0.tar.gz; tar xf postgresql-9.5.0.tar
 tar -zxf postgresql-9.5.0.tar.gz
@@ -12,7 +15,7 @@ cd postgresql-9.5.0
 pwd
 # dependency on readline package
 # sudo yum install readline-devel.x86_64
-./configure --prefix=/home/chongrui/postgres --with-pgport=2388
+./configure --prefix=$PG_HOME --with-pgport=2388
 gmake world
 gmake check
 gmake install
@@ -20,13 +23,13 @@ gmake install
 # set up for using Postgres
 # better way is to add to bashrc
 env
-LD_LIBRARY_PATH=/home/chongrui/postgres/lib:$LD_LIBRARY_PATH
+LD_LIBRARY_PATH=$PG_HOME/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
-PATH=/home/chongrui/postgres/bin:$PATH
+PATH=$PG_HOME/bin:$PATH
 export PATH
-cd /home/chongrui/postgres
+cd $PG_HOME
 mkdir data
-export PGDATA=/home/chongrui/postgres/data
+export PGDATA=$PG_HOME/data
 # BZ: don't export PATH in .bashrc; duplicate w/ /etc/profile
 # start the program
 export PGPORT=2388
