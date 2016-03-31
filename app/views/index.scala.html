@@ -4,14 +4,34 @@
 @(message: String)
 
 @main("patient-query") {
-    <h1>Welcome to MindsEye</h1>
-    <h4>Please input the patient's ID that you want to query:</h4>
 
-    @*************************************************
-    * specify where this form should be submitted to *
-    *************************************************@
-    @helper.form(routes.Patient.post) {
-        <p><input type="text" name="patient" value=""></p>
-        <p><button type="submit">Submit</button></p>
-    }
+@*************************************************
+* specify where this form should be submitted to *
+*************************************************@
+<blockquote>
+    <h3 class="text-left">WELCOME TO MINDSEYE!</h3>
+</blockquote>
+@helper.form(routes.Patient.post) {
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">NOTE</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">Please input a patient's MRN ID</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="patient" class="col-sm-2 control-label">
+            MRN ID
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="patient" name="patient">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</div>
+}
 }

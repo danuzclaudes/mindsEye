@@ -13,14 +13,15 @@ var Timeline = (function() {
         /////////////////////////////////////////////////////
         var groupNames = [
             'AAP', 'BUP', 'D2', 'LI', 'LTG',
-            'OLZ', 'SNRI', 'SSRI', 'TCA'
+            'OLZ', 'SNRI', 'SSRI', 'TCA',
+            'PSYCH-THRPY'
         ];
         var groups = new vis.DataSet();
-        for (var i = 0; i < 9; i++) {
+        for (var i = 0; i < groupNames.length; i++) {
             groups.add({
                 id: groupNames[i], // bug: should also be class name
                 content: groupNames[i],
-                style: "padding-left: 64px"
+                style: "padding-right: 0px"
             });
         }
 

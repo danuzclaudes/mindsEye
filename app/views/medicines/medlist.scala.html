@@ -11,15 +11,14 @@
 @(id: String, title: String, medicines: List[models.Medication], prevPage: String)
 
 @main("list-medicines"){
-<table data-group="@id" border="1" width="80%" style="margin-left:50px; margin-bottom:30px">
-    <tr>
-        <h3 class="groupname" style="margin-left:50px">@title # @id</h3>
-    </tr>
-    <tr>
-        <a href="@prevPage" style="margin-left:50px">
-            Click here to return to previous visits page
-        </a>
-    </tr>
+
+<blockquote>
+    <h3 class="text-left">@title MRN # @id</h3>
+    <a href="@prevPage" class="text-left">
+        Click here to return to previous visits page
+    </a>
+</blockquote>
+<table data-group="@id" class="table table-condensed table-hover table-striped table-responsive">
     @if(medicines.isEmpty){
         <h3 style="margin-left:50px">No medicine records available</h3>
     } else {
@@ -30,7 +29,7 @@
             <td><b>End Date: </b></td>
         </tr>
         @medicines.map { med =>
-            <tr class="med.medName">@views.html.medicines.medicine(med)</tr>
+            @views.html.medicines.medicine(med)
         }
     }
 </table>

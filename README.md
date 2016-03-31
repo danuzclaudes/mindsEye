@@ -1,6 +1,8 @@
 # MindsEye
 MindsEye is a research project to explore visualization and usability of Electronic Health Records (EHR) system, to help the clinicians gain overview of patients' conditions.
 
+This is a <b>Full-Stack</b> project that I'm responsible for <b>end-to-end technical designs, implementation, testing, documentation, delivery and maintenance</b> of all the services.
+The application is following RESTful architectural style and the framework that I'm using is called `Play Framework` in Java.
 + Model: PostgreSQL; Java for Object-relational mapping (ORM) design pattern
 + View: Scala template; jQuery, AJAX; Vis library
 + Controller: Java
@@ -66,14 +68,18 @@ MindsEye is a research project to explore visualization and usability of Electro
   - request path, or self-defined RESTful API: `/patient/:id`, `/visit/:id/medications`, etc
   - call definition: `controllers.YourClass.method(para: Type)`
 + Design your own request path and related call def first to expand new APIs.
-+ APIs
-  - GET     /                           controllers.Application.index()
-  - POST    /patient                    controllers.Patient.post()
-  - GET     /patient/:id                controllers.Patient.dashboard(id: Integer)
-  - GET     /patient/:id/visits         controllers.Visit.getAll(id: Integer)
-  - GET     /patient/:id/medications    controllers.Medication.getByPatient(id: Integer)
-  - GET     /visit/:id/medications      controllers.Medication.getByVisit(id: String)
-  - GET     /error/:id                  controllers.Application.handleError(id: Integer)
++ RESTful APIs
+
+
+  ```javascript
+  GET     /                           controllers.Application.index()
+  POST    /patient                    controllers.Patient.post()
+  GET     /patient/:id                controllers.Patient.dashboard(id: Integer)
+  GET     /patient/:id/visits         controllers.Visit.getAll(id: Integer)
+  GET     /patient/:id/medications    controllers.Medication.getByPatient(id: Integer)
+  GET     /visit/:id/medications      controllers.Medication.getByVisit(id: String)
+  GET     /error/:id                  controllers.Application.handleError(id: Integer)
+  ```
 
 ## Deployment - Ruby server & OpenShift
 + Reference here: https://www.playframework.com/documentation/latest/Deploying

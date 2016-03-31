@@ -4,15 +4,13 @@
 **************************************@
 @(visit: models.Visit)
 <tr>
-    <td class="date" width="20%">
+    <td id="date" width="20%">
         <a href="@routes.Medication.getByVisit(visit.visitId)">@visit.visitDate.format("yyyy-MM-dd")</a>
     </td>
-    <td class="cgi" width="50%"><b>CGI Score:</b> @visit.cgiScore</td>
+    <td id="cgi" width="50%"><b>CGI Score:</b> @visit.cgiScore</td>
 </tr>
-<tr class="notes">
+<tr id="notes" class="info">
     <td><b>Notes:</b></td>
     <td width="50%">@visit.visitNotes</td>
 </tr>
-<tr><td>&nbsp</td></tr>
-<!-- <button class="delete" href="#">Delete</button> -->
 

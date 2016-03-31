@@ -50,8 +50,8 @@ $.ajax({
             end: graph_end_format(timeRange.max),
             // set granularity of x-axis
             timeAxis: {
-                scale: 'month', // be cautious to set 'day'
-                step: 1,
+                scale: 'day', // be cautious to set 'day'
+                step: 7,
             },
         });
 
@@ -110,8 +110,8 @@ $.ajax({
             sort: true,
             // set granularity of x-axis
             timeAxis: {
-                scale: 'month', // be cautious to set 'day'
-                step: 1,
+                scale: 'day', // be cautious to set 'day'
+                step: 7,
             },
             width: 1000,
             shaded: {

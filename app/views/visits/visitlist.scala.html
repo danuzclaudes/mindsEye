@@ -11,11 +11,14 @@
 <!-- ********************************************************** -->
 <!-- View for table of all visiting data related with user <id> -->
 <!-- ********************************************************** -->
-<table data-group="@group" border="1" width="80%" style="margin-left:50px; margin-bottom:30px">
-    <tr><h3 class="groupname" style="margin-left:50px">@group for patient # @id</h3></tr>
-    <tr><h4 style="margin-left:50px">Click on the date to see all drugs prescribed on that visit</h4></tr>
+
+<blockquote>
+    <h3 id="groupname" class="text-left">@group for patient MRN # @id</h3>
+    <h4 class="text-left">Click on the date to see all drugs prescribed on that visit</h4>
+</blockquote>
+<table data-group="@group" width="60%" class="table table-bordered table-condensed table-hover table-striped table-responsive">
     @for(v <- visits) {
-        <tr class="v.visitId">@views.html.visits.visit(v)</tr>
+        @views.html.visits.visit(v)
     }
 </table>
 }

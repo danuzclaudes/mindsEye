@@ -1,22 +1,62 @@
 @*************************************************
-* `user` is the patient id from View `dashboard` *
+* `user` is the patient object from View `dashboard` *
 *************************************************@
-@(user: Integer)
+@(user: models.Patient)
 
 @main("vis-dashboard") {
 @****************************************************
 *    Viewer for dashboard of charts and time-line   *
 ****************************************************@
-<div id="user-id" class="@user">
-    <a href="@routes.Visit.getAll(user)">
-        Click here to view all visiting history of patient #@user in tables
+<div id="user-id" class="@user.patientId">
+    <a href="@routes.Visit.getAll(user.patientId)">
+        Click here to view all visiting history of patient #@user.patientId in tables
     </a>
 </div>
-<a href="@routes.Medication.getByPatient(user)">
-    Click here to view all medication history of patient #@user in tables
+<a href="@routes.Medication.getByPatient(user.patientId)">
+    Click here to view all medication history of patient #@user.patientId in tables
 </a>
-<div>
+<div id="demoAndDiagnosis" style="float:right">
+    <div>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demographicInfo" aria-expanded="true" aria-controls="demographicInfo">
+            Demographic Information of Patient
+        </button>
+        <div id="demographicInfo" class="collapse in">
+            <table id="demographic" class="table table-hover">
+                <thead><tr>
+                    <th>MNR #</th>
+                    <th>AGE</th>
+                    <th>GENDER</th>
+                    <th>RACE</th>
+                    <th>DAYS SINCE LAST VISIT</th>
+                </tr></thead>
+                <tbody><tr>
+                    <th scope="row">@user.patientId</th>
+                    <td>@user.patientAge</td>
+                    <td>@user.patientSex</td>
+                    <td>@user.patientRace</td>
+                    <td>@user.daysSinceLastVisit</td>
+                </tr></tbody>
+            </table>
+        </div>
+    </div>
 
+    <div>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#diagnosisInfo" aria-expanded="true" aria-controls="diagnosisInfo">
+            Diagnosis of Patient
+        </button>
+        <div id="diagnosisInfo" class="collapse in">
+            <table id="diagnosis" class="table table-hover">
+                <thead><tr>
+                    <th>Present Primary Diagnosis</th>
+                    <th>Secondary Diagnosis</th>
+                </tr></thead>
+                <tbody><tr>
+                    <td>@user.patientPrimaryDiagnosis</td>
+                    <td>@user.patientSecondaryDiagnosis</td>
+                </tr></tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <svg id="loading" width="250" viewbox="0 0 250 250">
