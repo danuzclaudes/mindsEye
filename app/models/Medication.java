@@ -22,7 +22,7 @@ public class Medication extends Model{
     @Column(name="med_end_date", columnDefinition = "date")
     public Date medEndDate;
     // group for each medication class for TimeLine
-    @Column(name="med_group", columnDefinition = "varchar(5) not null")
+    @Column(name="med_group", columnDefinition = "varchar(12) not null")
     public String medGroup;
 
     /**

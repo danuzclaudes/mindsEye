@@ -8,7 +8,7 @@ create table medication (
   med_name                  varchar(32),
   med_start_date            date not null,
   med_end_date              date,
-  med_group                 varchar(5) not null,
+  med_group                 varchar(12) not null,
   prescribed_on_visit       varchar(32),
   constraint pk_medication primary key (med_id))
 ;
@@ -18,6 +18,8 @@ create table patient (
   patient_age               integer,
   patient_sex               char(1),
   patient_race              char(1),
+  patient_primary_diagnosis varchar(256) not null,
+  patient_secondary_diagnosis varchar(256),
   days_since_last_visit     integer default 0,
   constraint pk_patient primary key (patient_id))
 ;

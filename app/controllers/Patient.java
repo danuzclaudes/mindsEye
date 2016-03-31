@@ -12,10 +12,18 @@ public class Patient extends Controller {
 
     public Result dashboard(int id) {
         Result tmp = validate(Integer.toString(id));
-        // set up patient id across session if valid
+        // Set up patient id across session if valid
         session().clear();
         session("patient", id + "");
-        return tmp.status() != 200 ? tmp : ok(dashboard.render(id));
+
+        // Retrieve patient demographic info by id and render on dashboard
+        return tmp.status() != 200 ? tmp : ok(dashboard.render(
+                getPatient(id)
+        ));
+    }
+
+    public models.Patient getPatient(int patientId) {
+        return models.Patient.find.byId(patientId);
     }
 
     public Result post() {

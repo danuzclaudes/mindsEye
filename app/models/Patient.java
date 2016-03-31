@@ -17,14 +17,22 @@ public class Patient extends Model {
     public char patientSex;
     @Column(name="patient_race", columnDefinition = "char(1)")
     public char patientRace;
+    @Column(name="patient_primary_diagnosis", columnDefinition = "varchar(256) not null")
+    public String patientPrimaryDiagnosis;
+    @Column(name="patient_secondary_diagnosis", columnDefinition = "varchar(256)")
+    public String patientSecondaryDiagnosis;
     @Column(name="days_since_last_visit", columnDefinition = "integer default 0")
     public int  daysSinceLastVisit;
 
-    public Patient(int id, int age, char sex, char race){
+    public Patient(int id, int age, char sex, char race,
+                   String primaryDiagnosis,
+                   String secondaryDiagnosis){
         this.patientId = id;
         this.patientAge = age;
         this.patientSex = sex;
         this.patientRace = race;
+        this.patientPrimaryDiagnosis =   primaryDiagnosis;
+        this.patientSecondaryDiagnosis = secondaryDiagnosis;
         this.daysSinceLastVisit = 0;
     }
 
@@ -32,8 +40,9 @@ public class Patient extends Model {
         Integer.class, Patient.class
     );
 
-    public static Patient create(int id, int age, char sex, char race){
-        Patient patient = new Patient(id, age, sex, race);
+    public static Patient create(int id, int age, char sex, char race,
+                                 String primary, String secondary){
+        Patient patient = new Patient(id, age, sex, race, primary, secondary);
         patient.save();
         return patient;
     }

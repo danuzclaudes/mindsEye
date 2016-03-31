@@ -116,3 +116,6 @@ The application is following RESTful architectural style and the framework that 
     - check with `nmap <hostname>`
 + BZ: How to deploy on OpenShift?
   - DO PLEASE send me a new issue if you have successfully deployed it, especially the shitty db connection...
+
+## Usability Testing Questionnaire
+[This](./questionnaire.pdf) is the survey of real usability testing for my Master's paper.
